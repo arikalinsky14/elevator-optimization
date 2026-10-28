@@ -3,14 +3,20 @@ from tfAgent import ControlAgent
 import tensorflow as tf
 import numpy as np
 import random
+from pathlib import Path
 
+# Paths relative to the deep-q-learning/ folder of this repo
+DQL_DIR = Path(__file__).resolve().parents[1]
+MODELS_DIR = DQL_DIR / "saved-models"
+REPORTS_DIR = DQL_DIR / "training-reports"
+RESULTS_DIR = DQL_DIR / "results"
 
 def main():
     print("TRAINING LOOP STARTED")
     #File names
     save_file = "fiveCapacityMoreTraining"
     save_count = 0
-    training_log = r"C:\Users\arika\OneDrive\Desktop\Python Code\trainingReports\log-" + save_file
+    training_log = str(REPORTS_DIR / ("log-" + save_file))
 
     #Define training hyperparemeters
     trainingSteps: int = 1000000

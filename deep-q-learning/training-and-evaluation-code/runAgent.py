@@ -3,6 +3,13 @@ import tensorflow as tf
 import os
 import numpy as np
 import time
+from pathlib import Path
+
+# Paths relative to the deep-q-learning/ folder of this repo
+DQL_DIR = Path(__file__).resolve().parents[1]
+MODELS_DIR = DQL_DIR / "saved-models"
+REPORTS_DIR = DQL_DIR / "training-reports"
+RESULTS_DIR = DQL_DIR / "results"
 
 def main():
     name = "2-27"
@@ -12,7 +19,7 @@ def main():
                         poissonLambda= 0.025)
     
     path = os.path.join("..", "savedModels", name)
-    path = r"C:\Users\arika\OneDrive\Desktop\Python Code\savedModels\fiveCapacityMoreTraining"
+    path = str(MODELS_DIR / "fiveCapacityMoreTraining")
     agentDQN = tf.keras.models.load_model(path)
 
     for timeStep in range(0,10000):

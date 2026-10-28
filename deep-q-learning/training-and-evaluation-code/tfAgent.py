@@ -5,7 +5,13 @@ from collections import namedtuple
 from replayBuffer import ReplayBuffer
 import random
 import os
+from pathlib import Path
 
+# Paths relative to the deep-q-learning/ folder of this repo
+DQL_DIR = Path(__file__).resolve().parents[1]
+MODELS_DIR = DQL_DIR / "saved-models"
+REPORTS_DIR = DQL_DIR / "training-reports"
+RESULTS_DIR = DQL_DIR / "results"
 
 class ControlAgent:
     def __init__(self, 
@@ -18,7 +24,7 @@ class ControlAgent:
                  seed, 
                  batch_size, 
                  targetUpdatePeriod = 1000, 
-                 filePath = r"C:\Users\arika\OneDrive\Desktop\Python Code\trainingReports\lastestLog"):
+                 filePath = str(REPORTS_DIR / "lastestLog")):
         self.state_size = state_size
         self.action_size = action_size
         self.seed = random.seed(seed)
@@ -45,12 +51,13 @@ class ControlAgent:
         self.stayCounter: int = 0
 
         self.filename = filePath
+        Path(self.filename).parent.mkdir(parents=True, exist_ok=True)
 
     def returnAllLoses(self):
         return self.allLosses
 
     def loadNetwork(self,name):
-        path = os.path.join(r"C:\Users\arika\OneDrive\Desktop\Python Code\savedModels", name)
+        path = os.path.join(str(MODELS_DIR), name)
         self.localDQN = tf.keras.models.load_model(path)
         self.targetDQN = tf.keras.models.load_model(path)
         # Recompile the model
@@ -59,7 +66,7 @@ class ControlAgent:
         print("NETWORKS LOADED")
 
     def saveNetwork(self,name):
-        path = os.path.join("..", "savedModels", name)
+        path = os.path.join(str(MODELS_DIR), name)
         self.localDQN.save(path)
         print(f"Local DQN model saved to {path}")
 

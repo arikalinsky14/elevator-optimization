@@ -1,3 +1,12 @@
+
+from pathlib import Path
+
+# Paths relative to the deep-q-learning/ folder of this repo
+DQL_DIR = Path(__file__).resolve().parents[1]
+MODELS_DIR = DQL_DIR / "saved-models"
+REPORTS_DIR = DQL_DIR / "training-reports"
+RESULTS_DIR = DQL_DIR / "results"
+
 #!/usr/bin/env python3
 import tensorflow as tf
 import numpy as np
@@ -189,8 +198,8 @@ def main():
     old_state_size = 29  # one-capacity network input dimension
     new_state_size = 33  # five-capacity network input dimension
     
-    old_model_path = r"C:\Users\arika\OneDrive\Desktop\Python Code\savedModels\SixRequests"
-    new_model_path = r"C:\Users\arika\OneDrive\Desktop\Python Code\savedModels\transferredWeights2"
+    old_model_path = str(MODELS_DIR / "SixRequests")
+    new_model_path = str(MODELS_DIR / "transferredWeights2")
     
     print("Loading one-capacity model from:", old_model_path)
     old_model = tf.keras.models.load_model(old_model_path)
